@@ -115,7 +115,7 @@ jobs:
           DAY_OVERRIDE=${DAY_OVERRIDE:-}
           PHASE_OVERRIDE=${PHASE_OVERRIDE:-}
 
-          if [ $IS_OVERRIDE == true ]; then
+          if [ "${IS_OVERRIDE,,}" == "true" ]; then
             if [ -n "$DAY_OVERRIDE" ]; then 
               DAY=$DAY_OVERRIDE
             fi
@@ -138,7 +138,7 @@ jobs:
           STEP: ${{ inputs.step }}
         run: |
           python hack_stats_fetch.py \
-            --start "$DAY" --end "$DAY" --phase "${PHASE} \
+            --start "$DAY" --end "$DAY" --phase "${PHASE}" \
             --job "${JOB_ID}" --jobs "${NUM_JOBS}" --step "${STEP}"
 
       - name: Move shared resources to artifacts
