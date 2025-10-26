@@ -83,7 +83,7 @@ jobs:
 
       - name: Configure args
         env:
-          IS_OVERRIDE: ${{ secrets.IS_OVERRIDE }}
+          IS_MANUAL_OVERRIDE: ${{ secrets.IS_MANUAL_OVERRIDE }}
           DAY_OVERRIDE: ${{ secrets.DAY }}
           PHASE_OVERRIDE: ${{ secrets.PHASE }}
         shell: bash
@@ -111,11 +111,11 @@ jobs:
             PHASE=6
           fi
   
-          IS_OVERRIDE=${IS_OVERRIDE:-}
+          IS_MANUAL_OVERRIDE=${IS_MANUAL_OVERRIDE:-}
           DAY_OVERRIDE=${DAY_OVERRIDE:-}
           PHASE_OVERRIDE=${PHASE_OVERRIDE:-}
 
-          if [ "${IS_OVERRIDE,,}" == "true" ]; then
+          if [ "${IS_MANUAL_OVERRIDE,,}" == "true" ]; then
             if [ -n "$DAY_OVERRIDE" ]; then 
               DAY=$DAY_OVERRIDE
             fi
@@ -136,6 +136,7 @@ jobs:
           JOB_ID: ${{ matrix.job }}
           NUM_JOBS: ${{ strategy.job-total }}
           STEP: ${{ inputs.step }}
+          SLEEP_S: ${{ secrets.SLEEP_S }}
         run: |
           python hack_stats_fetch.py \
             --start "$DAY" --end "$DAY" --phase "${PHASE}" \
