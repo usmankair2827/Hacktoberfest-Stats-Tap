@@ -82,15 +82,21 @@ jobs:
           find _aggregate -type f -print -exec mv -f {} files/ \;
 
       - name: Configure args
+        env:
+          IS_OVERRIDE: ${{ secrets.IS_OVERRIDE }}
+          DAY_OVERRIDE: ${{ secrets.DAY }}
+          PHASE_OVERRIDE: ${{ secrets.PHASE }}
         shell: bash
         run: |
-          MONTH=$(date -u +%m)
+          set -euo pipefail
+
+          MONTH="$(date -u +%m)"
           if [ "$MONTH" -eq 10 ]; then
-            DAY=$(date -u +%d | sed 's/^0//')
+            DAY="$(date -u +%d | sed 's/^0//')"
           else
             DAY=31
           fi
-          HOUR=$(date -u +%H)
+          HOUR="$(date -u +%H)"
           if [ "$HOUR" -lt 4 ]; then
             PHASE=1
           elif [ "$HOUR" -lt 8 ]; then
@@ -104,6 +110,19 @@ jobs:
           else
             PHASE=6
           fi
+  
+          IS_OVERRIDE="${IS_OVERRIDE:-}"
+          DAY_OVERRIDE="${DAY_OVERRIDE:-}"
+          PHASE_OVERRIDE="${PHASE_OVERRIDE:-}"
+          if [ "${IS_OVERRIDE,,}" = "true" ]; then
+            if [ -n "$DAY_OVERRIDE" ]; then 
+              DAY="$DAY_OVERRIDE"
+            fi
+            if [ -n "$PHASE_OVERRIDE" ]; then
+              PHASE="$PHASE_OVERRIDE"
+            fi
+          fi
+
           {
             echo "DAY=$DAY"
             echo "PHASE=$PHASE"
@@ -118,9 +137,8 @@ jobs:
           STEP: ${{ inputs.step }}
         run: |
           python hack_stats_fetch.py \
-            --start "$DAY" --end "$DAY" \
-            --job "${JOB_ID}" --jobs "${NUM_JOBS}" \
-            --step "${STEP}" --phase "${PHASE}"
+            --start "$DAY" --end "$DAY" --phase "${PHASE} \
+            --job "${JOB_ID}" --jobs "${NUM_JOBS}" --step "${STEP}"
 
       - name: Move shared resources to artifacts
         if: inputs.is_local_commit == ''

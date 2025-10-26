@@ -24,12 +24,11 @@ Orchestrates API-fetching to a private core repo for Hacktoberfest GitHub PR sta
 ## Instructions
 
 * For `i` in {1,...,4}, create a [repository Action](../../settings/secrets/actions/new) named `GH_TOKEN_<i>` using a unique [personal access token](https://github.com/settings/personal-access-tokens/new) with:
-  * any `Resource owner`
   * `Public repositories`
   * _note: `i` must match the job matrix in `.github/workflows/sync_parallel_step.yml`_
 * Create a [repository Action](../../settings/secrets/actions/new) named `REPO_NAME` using the `<owner/repository>` name the source code is hosted in.
 * Create a [repository Action](../../settings/secrets/actions/new) named `REPO_TOKEN` using a [personal access token](https://github.com/settings/personal-access-tokens/new) with:
-  * the `Resource owner` matching the `owner` in the `<owner/repository>` name set to the `REPO_NAME` repository action
+  * the `Resource owner` matching the `owner` in the `<owner/repository>` name set to the `REPO_NAME` action
   * `Only select repositories`:
     * the repository matching the `<owner/repository>` name set to `REPO_NAME`
   * `Add permissions`:
