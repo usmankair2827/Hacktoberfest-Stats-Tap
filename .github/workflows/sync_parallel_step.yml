@@ -78,8 +78,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          shopt -s nullglob
           mkdir -p files
-          find _aggregate -type f -print -exec mv -f {} files/ \;
+          mapfile -t hfsec < <(find _aggregate -type f -name '*.hfsec')
+          if ((${#hfsec[@]})); then
+            mv -f "${hfsec[@]}" files/
+          fi
 
       - name: Configure args
         env:
@@ -170,9 +174,10 @@ jobs:
           JOB_ID: ${{ matrix.job }}
           STEP: ${{ inputs.step }}
         run: |
-          mkdir -p "out/shared_step_${STEP}_job_${JOB_ID}"
+          set -euo pipefail
           shopt -s nullglob
-          matches=(files/shared_step_${STEP}_job_$((10#$JOB_ID - 1))*)
+          mkdir -p "out/shared_step_${STEP}_job_${JOB_ID}"
+          matches=(files/shared_step_${STEP}_job_$((10#$JOB_ID - 1))*.hfsec)
           if ((${#matches[@]})); then
             cp -f "${matches[@]}" "out/shared_step_${STEP}_job_${JOB_ID}/"
           fi
