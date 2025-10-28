@@ -94,12 +94,13 @@ jobs:
           MONTH=$(date -u +%m)
           if [ "$MONTH" -eq 9 ]; then
             DAY=30
-          if [ "$MONTH" -eq 10 ]; then
+          elif [ "$MONTH" -eq 10 ]; then
             DAY=$(date -u +%d | sed 's/^0//')
           else
             MONTH=11
             DAY=1
           fi
+
           HOUR=$(date -u +%H)
           if [ "$HOUR" -lt 2 ]; then
             PHASE=1
