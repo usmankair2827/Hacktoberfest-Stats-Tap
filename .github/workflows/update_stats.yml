@@ -24,6 +24,7 @@ jobs:
     with:
       step: '2'
       prev_step_a: '1'
+      is_commit: 'true'
     secrets: inherit
 
   sync-parallel-fetch-step-3:
@@ -48,7 +49,7 @@ jobs:
       step: '5'
       prev_step_a: '2'
       prev_step_b: '4'
-      is_local_commit: 'true'
+      is_commit: 'true'
     secrets: inherit
 
   cleanup:
