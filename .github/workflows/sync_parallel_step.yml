@@ -90,7 +90,7 @@ jobs:
           IS_MANUAL_OVERRIDE: ${{ secrets.IS_MANUAL_OVERRIDE }}
           MONTH_OVERRIDE: ${{ secrets.MONTH }}
           DAY_OVERRIDE: ${{ secrets.DAY }}
-          PHASE_OVERRIDE: ${{ secrets.PHASE }}
+          HOUR_OVERRIDE: ${{ secrets.HOUR }}
         shell: bash
         run: |
           set -euo pipefail
@@ -104,12 +104,12 @@ jobs:
             MONTH=11
             DAY=1
           fi
-          PHASE=$(date -u +%H)
+          HOUR=$(date -u +%H)
   
           IS_MANUAL_OVERRIDE=${IS_MANUAL_OVERRIDE:-}
           MONTH_OVERRIDE=${MONTH_OVERRIDE:-}
           DAY_OVERRIDE=${DAY_OVERRIDE:-}
-          PHASE_OVERRIDE=${PHASE_OVERRIDE:-}
+          HOUR_OVERRIDE=${HOUR_OVERRIDE:-}
 
           if [ "${IS_MANUAL_OVERRIDE,,}" == "true" ]; then
             if [ -n "$MONTH_OVERRIDE" ]; then 
@@ -118,15 +118,15 @@ jobs:
             if [ -n "$DAY_OVERRIDE" ]; then 
               DAY=$DAY_OVERRIDE
             fi
-            if [ -n "$PHASE_OVERRIDE" ]; then
-              PHASE=$PHASE_OVERRIDE
+            if [ -n "$HOUR_OVERRIDE" ]; then
+              HOUR=$HOUR_OVERRIDE
             fi
           fi
 
           {
             echo "MONTH=$MONTH"
             echo "DAY=$DAY"
-            echo "PHASE=$PHASE"
+            echo "HOUR=$HOUR"
           } >> "$GITHUB_ENV"
 
       - name: Run step ${{ inputs.step }}
@@ -138,8 +138,8 @@ jobs:
           STEP: ${{ inputs.step }}
           SLEEP_S: ${{ secrets.SLEEP_S }}
         run: |
-          python hack_stats_fetch.py \
-            --month "$MONTH" --start "$DAY" --end "$DAY" --phase "${PHASE}" \
+          python hack_stats_pipeline.py \
+            --month "$MONTH" --day "$DAY" --hour "$HOUR" \
             --job "${JOB_ID}" --jobs "${NUM_JOBS}" --step "${STEP}"
 
       - name: Move shared resources to artifacts
