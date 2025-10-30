@@ -1,6 +1,8 @@
 name: update-stats
 
 on:
+  schedule:
+    - cron: '50 * * * *'
   workflow_dispatch:
 
 permissions:
