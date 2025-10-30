@@ -1,4 +1,4 @@
-name: parallel-update-step-(reusable)
+name: parallel-update-step
 
 on:
   workflow_call:
