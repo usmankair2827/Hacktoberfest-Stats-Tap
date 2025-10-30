@@ -1,4 +1,4 @@
-name: Update stats (main)
+name: update-stats-(main)
 
 on:
   workflow_dispatch:
@@ -24,7 +24,6 @@ jobs:
     with:
       step: '2'
       prev_step_a: '1'
-      is_commit: 'true'
     secrets: inherit
 
   sync-parallel-fetch-step-3:

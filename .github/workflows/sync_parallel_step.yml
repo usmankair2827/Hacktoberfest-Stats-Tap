@@ -1,4 +1,4 @@
-name: Parallel update step (reusable)
+name: parallel-update-step-(reusable)
 
 on:
   workflow_call:
@@ -37,7 +37,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ secrets.REPO_NAME }}
           ref: main
@@ -46,7 +46,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Python v3.13
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.13'
 
@@ -59,7 +59,7 @@ jobs:
 
       - name: Download shared resources from previous step A
         if: inputs.prev_step_a != ''
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           pattern: shared_step_${{ inputs.prev_step_a }}_job*
           path: _aggregate
@@ -67,7 +67,7 @@ jobs:
 
       - name: Download shared resources from previous step B
         if: inputs.prev_step_b != ''
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           pattern: shared_step_${{ inputs.prev_step_b }}_job*
           path: _aggregate
@@ -104,33 +104,7 @@ jobs:
             MONTH=11
             DAY=1
           fi
-
-          HOUR=$(date -u +%H)
-          if [ "$HOUR" -lt 2 ]; then
-            PHASE=1
-          elif [ "$HOUR" -lt 4 ]; then
-            PHASE=2
-          elif [ "$HOUR" -lt 6 ]; then
-            PHASE=3
-          elif [ "$HOUR" -lt 8 ]; then
-            PHASE=4
-          elif [ "$HOUR" -lt 10 ]; then
-            PHASE=5
-          elif [ "$HOUR" -lt 12 ]; then
-            PHASE=6
-          elif [ "$HOUR" -lt 14 ]; then
-            PHASE=7
-          elif [ "$HOUR" -lt 16 ]; then
-            PHASE=8
-          elif [ "$HOUR" -lt 18 ]; then
-            PHASE=9
-          elif [ "$HOUR" -lt 20 ]; then
-            PHASE=10
-          elif [ "$HOUR" -lt 22 ]; then
-            PHASE=11
-          else
-            PHASE=12
-          fi
+          PHASE=$(($(date -u +%H) + 1))
   
           IS_MANUAL_OVERRIDE=${IS_MANUAL_OVERRIDE:-}
           MONTH_OVERRIDE=${MONTH_OVERRIDE:-}
@@ -184,7 +158,7 @@ jobs:
 
       - name: Upload shared resources
         if: inputs.step != '5'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: shared_step_${{ inputs.step }}_job_${{ matrix.job }}
           path: out/shared_step_${{ inputs.step }}_job_${{ matrix.job }}/

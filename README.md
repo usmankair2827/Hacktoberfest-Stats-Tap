@@ -34,4 +34,4 @@ Orchestrates API-fetching to a private core repo for Hacktoberfest GitHub PR sta
     * `Contents`:
       * `Read and write`
 * Create a [repository Action](../../settings/secrets/actions/new) named `KEY` using a URL-safe base64-encoded random key 🔑 with:
-  * `base64.urlsafe_b64encode(os.urandom(32)).decode()` to generate the URL-safe base64-encoded random key
+  * `base64.urlsafe_b64encode(os.urandom(32)).decode()` to generate the base64-encoded random key
