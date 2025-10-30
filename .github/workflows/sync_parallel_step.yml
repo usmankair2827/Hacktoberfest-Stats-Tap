@@ -104,7 +104,7 @@ jobs:
             MONTH=11
             DAY=1
           fi
-          PHASE=$(($(date -u +%H) + 1))
+          PHASE=$(date -u +%H)
   
           IS_MANUAL_OVERRIDE=${IS_MANUAL_OVERRIDE:-}
           MONTH_OVERRIDE=${MONTH_OVERRIDE:-}
