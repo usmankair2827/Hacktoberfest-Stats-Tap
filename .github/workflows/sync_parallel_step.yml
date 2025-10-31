@@ -61,7 +61,7 @@ jobs:
         if: inputs.prev_step_a != ''
         uses: actions/download-artifact@v6
         with:
-          pattern: shared_step_${{ inputs.prev_step_a }}_job*
+          pattern: step_${{ inputs.prev_step_a }}_job*
           path: _aggregate
           merge-multiple: true
 
@@ -69,7 +69,7 @@ jobs:
         if: inputs.prev_step_b != ''
         uses: actions/download-artifact@v6
         with:
-          pattern: shared_step_${{ inputs.prev_step_b }}_job*
+          pattern: step_${{ inputs.prev_step_b }}_job*
           path: _aggregate
           merge-multiple: true
 
@@ -150,18 +150,18 @@ jobs:
         run: |
           set -euo pipefail
           shopt -s nullglob
-          mkdir -p "out/shared_step_${STEP}_job_${JOB_ID}"
-          matches=(files/shared_step_${STEP}_job_$((10#$JOB_ID - 1))*.hfsec)
+          mkdir -p "out/step_${STEP}_job_${JOB_ID}"
+          matches=(files/step_${STEP}_job_$((10#$JOB_ID - 1))*.hfsec)
           if ((${#matches[@]})); then
-            cp -f "${matches[@]}" "out/shared_step_${STEP}_job_${JOB_ID}/"
+            cp -f "${matches[@]}" "out/step_${STEP}_job_${JOB_ID}/"
           fi
 
       - name: Upload shared resources
         if: inputs.step != '5'
         uses: actions/upload-artifact@v5
         with:
-          name: shared_step_${{ inputs.step }}_job_${{ matrix.job }}
-          path: out/shared_step_${{ inputs.step }}_job_${{ matrix.job }}/
+          name: step_${{ inputs.step }}_job_${{ matrix.job }}
+          path: out/step_${{ inputs.step }}_job_${{ matrix.job }}/
           if-no-files-found: ignore
           retention-days: 1
 
